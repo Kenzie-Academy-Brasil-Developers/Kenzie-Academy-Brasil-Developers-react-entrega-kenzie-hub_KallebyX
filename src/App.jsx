@@ -5,9 +5,7 @@ import RouterMain from "./Routers/routes";
 
 function App() {
    return (
-      <>
-         <RouterMain/>
-      </>
+      <RouterMain />
    );
 }
 

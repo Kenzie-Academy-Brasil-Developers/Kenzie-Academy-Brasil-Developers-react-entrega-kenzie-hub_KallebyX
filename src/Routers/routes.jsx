@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuthUser } from '../context/UserContext';
 import LoginPage from '../components/LoginPage';
 import RegisterPage from '../components/RegisterPage';
@@ -10,18 +10,9 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={user ? <Navigate to="/dashboard" /> : < LoginPage />}
-      />
-      <Route
-        path="/register"
-        element={user ? <Navigate to="/dashboard" /> : <RegisterPage />}
-      />
-      <Route
-        path="/dashboard"
-        element={user ? <DashboardPage /> : <Navigate to="/" />}
-      />
+      <Route path="/" element={user ? <Navigate to="/dashboard" /> : <LoginPage />} />
+      <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <RegisterPage />} />
+      <Route path="/dashboard" element={user ? <DashboardPage /> : <Navigate to="/" />} />
     </Routes>
   );
 }

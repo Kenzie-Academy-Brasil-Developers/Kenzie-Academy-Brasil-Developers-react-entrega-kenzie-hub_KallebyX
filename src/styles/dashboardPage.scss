@@ -114,3 +114,56 @@ hr {
     margin-bottom: 20px;
 }
 
+.paiTech {
+    width: 780px;
+    height: 327px;
+    flex-shrink: 0;
+}
+
+.modalDeAdicionar {
+    display: inline-flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tituloTec {
+    display: inline-flex;
+    color: var(--grey-0, #F8F9FA);
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 18px;
+}
+
+.criarModalB {
+    display: inline-flex;
+    width: 32.485px;
+    height: 32px;
+    flex-shrink: 0;
+    margin: 1px solid;
+    padding: 0;
+    border-radius: 8px;
+}
+
+.retangulo {
+    width: 780px;
+    height: 274px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    background: #212529;
+}
+
+.techList {
+    width: 732px;
+    height: 49px;
+    flex-shrink: 0;
+    border-radius: 4px;
+    background: #121214;
+}
+
+.content {
+    width: 686.781px;
+    height: 23px;
+    flex-shrink: 0;
+}

@@ -9,6 +9,7 @@ export function useAuthUser() {
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [userTechs, setUserTechs] = useState([]);
 
   const autologin = async () => {
     const token = localStorage.getItem('@TOKEN');
@@ -19,7 +20,8 @@ export function UserProvider({ children }) {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        setUser(response.data); // Correção aqui
+        setUser(response.data);
+        setUserTechs(response.data.techs || []);
       } catch (error) {
         console.error('Erro ao realizar autologin:', error);
       }
@@ -55,12 +57,14 @@ export function UserProvider({ children }) {
   };
 
   const logout = () => {
-    setUser(null); 
-    localStorage.removeItem('@TOKEN'); 
+    setUser(null);
+    setUserTechs([]);
+    localStorage.removeItem('@TOKEN');
   };
 
   const contextValue = {
     user,
+    userTechs,
     registerUser,
     loginUser,
     autologin,
@@ -73,3 +77,5 @@ export function UserProvider({ children }) {
     </UserContext.Provider>
   );
 }
+
+export default UserProvider;
