@@ -1,17 +1,51 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuthUser } from '../../context/UserContext'; 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Link, useNavigate } from 'react-router-dom'; 
+import { z } from 'zod';
+import { api } from '../../api/axios';
 import logo from '../../assets/logo.png';
 
-const RegisterPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const navigate = useNavigate();
-  const { registerUser } = useAuthUser(); 
+
+const schema = z.object({
+  name: z.string().min(1, { message: 'Campo obrigatório' }),
+  email: z.string().email({ message: 'Email inválido' }).min(1, { message: 'Campo obrigatório' }),
+  password: z
+    .string()
+    .min(8, { message: 'A senha deve ter pelo menos 8 caracteres' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/, { message: 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número' }),
+  confirmPassword: z
+    .string()
+    .min(8, { message: 'A senha deve ter pelo menos 8 caracteres' })
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/, { message: 'A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número' })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords don't match",
+      path: ["confirmPassword"], 
+    }),
+  bio: z.string().min(1, { message: 'Campo obrigatório' }),
+  contact: z.string().min(1, { message: 'Campo obrigatório' }),
+  course_module: z.string().min(1, { message: 'Campo obrigatório' }),
+});
+
+function RegisterPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm(
+    {
+      resolver: zodResolver(schema)
+    }
+  );
+
+  const navigate = useNavigate(); 
 
   const onSubmit = async (data) => {
     try {
-      await registerUser(data); 
+      const response = await api.post('/users', data);
+      console.log(response);
+
       navigate('/');
     } catch (err) {
       console.error('Erro ao criar conta:', err);
